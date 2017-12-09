@@ -5,3 +5,6 @@
 *.swp
 venv
 demo
+build
+dist
+src/django_adzone.egg-info
