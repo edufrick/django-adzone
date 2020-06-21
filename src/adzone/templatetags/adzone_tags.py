@@ -5,14 +5,18 @@
 # Please see the text file LICENCE for more information
 # If this script is distributed, it must be accompanied by the Licence
 
+from __future__ import absolute_import
+
 from datetime import datetime
+
+from adzone.models import AdBase
+from adzone.models import AdImpression
 from django import template
-from adzone.models import AdBase, AdImpression
 
 register = template.Library()
 
 
-@register.inclusion_tag('adzone/ad_tag.html', takes_context=True)
+@register.inclusion_tag("adzone/ad_tag.html", takes_context=True)
 def random_zone_ad(context, ad_zone):
     """
     Returns a random advert for ``ad_zone``.
@@ -32,21 +36,22 @@ def random_zone_ad(context, ad_zone):
 
     # Retrieve a random ad for the zone
     ad = AdBase.objects.get_random_ad(ad_zone)
-    to_return['ad'] = ad
+    to_return["ad"] = ad
 
     # Record a impression for the ad
-    if context.has_key('from_ip') and ad:
-        from_ip = context.get('from_ip')
+    if context.has_key("from_ip") and ad:
+        from_ip = context.get("from_ip")
         try:
             impression = AdImpression(
-                ad=ad, impression_date=datetime.now(), source_ip=from_ip)
+                ad=ad, impression_date=datetime.now(), source_ip=from_ip
+            )
             impression.save()
         except:
             pass
     return to_return
 
 
-@register.inclusion_tag('adzone/ad_tag.html', takes_context=True)
+@register.inclusion_tag("adzone/ad_tag.html", takes_context=True)
 def random_category_ad(context, ad_zone, ad_category):
     """
     Returns a random advert from the specified category.
@@ -60,14 +65,15 @@ def random_category_ad(context, ad_zone, ad_category):
 
     # Retrieve a random ad for the category and zone
     ad = AdBase.objects.get_random_ad(ad_zone, ad_category)
-    to_return['ad'] = ad
+    to_return["ad"] = ad
 
     # Record a impression for the ad
-    if context.has_key('from_ip') and ad:
-        from_ip = context.get('from_ip')
+    if context.has_key("from_ip") and ad:
+        from_ip = context.get("from_ip")
         try:
             impression = AdImpression(
-                ad=ad, impression_date=datetime.now(), source_ip=from_ip)
+                ad=ad, impression_date=datetime.now(), source_ip=from_ip
+            )
             impression.save()
         except:
             pass

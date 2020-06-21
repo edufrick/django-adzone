@@ -5,12 +5,14 @@
 # Please see the text file LICENCE for more information
 # If this script is distributed, it must be accompanied by the Licence
 
+from __future__ import absolute_import
+
 from datetime import datetime
 
-from django.shortcuts import get_object_or_404
+from adzone.models import AdBase
+from adzone.models import AdClick
 from django.http import HttpResponseRedirect
-
-from adzone.models import AdBase, AdClick
+from django.shortcuts import get_object_or_404
 
 
 def ad_view(request, id):
@@ -18,15 +20,13 @@ def ad_view(request, id):
     ad = get_object_or_404(AdBase, id=id)
 
     click = AdClick.objects.create(
-        ad=ad,
-        click_date=datetime.now(),
-        source_ip=request.META.get('REMOTE_ADDR', '')
+        ad=ad, click_date=datetime.now(), source_ip=request.META.get("REMOTE_ADDR", "")
     )
     click.save()
 
     redirect_url = ad.url
-    if not redirect_url.startswith('http://'):
+    if not redirect_url.startswith("http://"):
         # Add http:// to the url so that the browser redirects correctly
-        redirect_url = 'http://' + redirect_url
+        redirect_url = "http://" + redirect_url
 
     return HttpResponseRedirect(redirect_url)

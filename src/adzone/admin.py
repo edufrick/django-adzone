@@ -5,48 +5,58 @@
 # Please see the text file LICENCE for more information
 # If this script is distributed, it must be accompanied by the Licence
 
-from django.contrib import admin
+from __future__ import absolute_import
+
 from adzone.models import *
+from django.contrib import admin
 
 
 class AdvertiserAdmin(admin.ModelAdmin):
-    search_fields = ['company_name', 'website']
-    list_display = ['company_name', 'website', 'user']
-    raw_id_fields = ['user']
+    search_fields = ["company_name", "website"]
+    list_display = ["company_name", "website", "user"]
+    raw_id_fields = ["user"]
 
 
 class AdCategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ['title']}
-    list_display = ['title', 'slug']
+    prepopulated_fields = {"slug": ["title"]}
+    list_display = ["title", "slug"]
 
 
 class AdZoneAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'description']
+    list_display = ["title", "slug", "description"]
 
 
 class AdBaseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'url', 'advertiser', 'since', 'updated', 'start_showing', 'stop_showing']
-    list_filter = ['updated', 'start_showing', 'stop_showing', 'since', 'updated']
-    search_fields = ['title', 'url']
-    raw_id_fields = ['advertiser']
+    list_display = [
+        "title",
+        "url",
+        "advertiser",
+        "since",
+        "updated",
+        "start_showing",
+        "stop_showing",
+    ]
+    list_filter = ["updated", "start_showing", "stop_showing", "since", "updated"]
+    search_fields = ["title", "url"]
+    raw_id_fields = ["advertiser"]
 
 
 class AdClickAdmin(admin.ModelAdmin):
-    search_fields = ['ad', 'source_ip']
-    list_display = ['ad', 'click_date', 'source_ip']
-    list_filter = ['click_date']
-    date_hierarchy = 'click_date'
+    search_fields = ["ad", "source_ip"]
+    list_display = ["ad", "click_date", "source_ip"]
+    list_filter = ["click_date"]
+    date_hierarchy = "click_date"
 
 
 class AdImpressionAdmin(admin.ModelAdmin):
-    search_fields = ['ad', 'source_ip']
-    list_display = ['ad', 'impression_date', 'source_ip']
-    list_filter = ['impression_date']
-    date_hierarchy = 'impression_date'
+    search_fields = ["ad", "source_ip"]
+    list_display = ["ad", "impression_date", "source_ip"]
+    list_filter = ["impression_date"]
+    date_hierarchy = "impression_date"
 
 
 class TextAdAdmin(AdBaseAdmin):
-    search_fields = ['title', 'url', 'content']
+    search_fields = ["title", "url", "content"]
 
 
 admin.site.register(Advertiser, AdvertiserAdmin)
