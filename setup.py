@@ -1,4 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
 setup(
     name="django-adzone",
@@ -6,10 +7,8 @@ setup(
     url="http://github.com/winterweaver/django-adzone",
     description="A django app to manage adverts according to zones on a website.",
     author="Andre Engelbrecht",
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    install_requires=[
-        'setuptools',
-    ],
+    packages=find_packages("src"),
+    package_dir={"": "src"},
+    install_requires=[],
     include_package_data=True,
 )
