@@ -7,7 +7,13 @@
 
 from __future__ import absolute_import
 
-from adzone.models import *
+from adzone.models import AdCategory
+from adzone.models import AdClick
+from adzone.models import AdImpression
+from adzone.models import Advertiser
+from adzone.models import AdZone
+from adzone.models import BannerAd
+from adzone.models import TextAd
 from django.contrib import admin
 
 

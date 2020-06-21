@@ -15,8 +15,9 @@ from django.template.response import SimpleTemplateResponse
 from django.test import TestCase
 from django.utils import timezone
 
-# Helper functions to help setting up the tests
-user = lambda: User.objects.create_user("test", "test@example.com", "secret")
+
+def user():
+    return User.objects.create_user("test", "test@example.com", "secret")
 
 
 def datenow():
