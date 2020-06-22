@@ -9,9 +9,10 @@ from __future__ import absolute_import
 
 from datetime import datetime
 
+from django import template
+
 from adzone.models import AdBase
 from adzone.models import AdImpression
-from django import template
 
 register = template.Library()
 

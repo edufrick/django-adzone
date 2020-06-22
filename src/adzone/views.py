@@ -9,10 +9,11 @@ from __future__ import absolute_import
 
 from datetime import datetime
 
-from adzone.models import AdBase
-from adzone.models import AdClick
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+
+from adzone.models import AdBase
+from adzone.models import AdClick
 
 
 def ad_view(request, id):

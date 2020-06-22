@@ -9,10 +9,11 @@ from __future__ import absolute_import
 
 import datetime
 
-from adzone.managers import AdManager
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from adzone.managers import AdManager
 
 # Use a datetime a few days before the max to that timezone changes don't
 # cause an OverflowError.

@@ -1,5 +1,11 @@
 from __future__ import absolute_import
 
+from django.contrib.auth.models import User
+from django.template import Template
+from django.template.response import SimpleTemplateResponse
+from django.test import TestCase
+from django.utils import timezone
+
 from adzone.managers import AdManager
 from adzone.models import AdBase
 from adzone.models import AdCategory
@@ -9,11 +15,6 @@ from adzone.models import Advertiser
 from adzone.models import AdZone
 from adzone.templatetags.adzone_tags import random_category_ad
 from adzone.templatetags.adzone_tags import random_zone_ad
-from django.contrib.auth.models import User
-from django.template import Template
-from django.template.response import SimpleTemplateResponse
-from django.test import TestCase
-from django.utils import timezone
 
 
 def user():
