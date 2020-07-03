@@ -9,11 +9,10 @@ from __future__ import absolute_import
 
 import datetime
 
+from adzone.managers import AdManager
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
-from adzone.managers import AdManager
 
 # Use a datetime a few days before the max to that timezone changes don't
 # cause an OverflowError.
@@ -120,7 +119,9 @@ class AdImpression(models.Model):
     """
 
     impression_date = models.DateTimeField(verbose_name=_(u"When"), auto_now_add=True)
-    source_ip = models.IPAddressField(verbose_name=_(u"Who"), null=True, blank=True)
+    source_ip = models.GenericIPAddressField(
+        verbose_name=_(u"Who"), null=True, blank=True
+    )
     ad = models.ForeignKey(AdBase)
 
     class Meta:
@@ -134,7 +135,9 @@ class AdClick(models.Model):
     """
 
     click_date = models.DateTimeField(verbose_name=_(u"When"), auto_now_add=True)
-    source_ip = models.IPAddressField(verbose_name=_(u"Who"), null=True, blank=True)
+    source_ip = models.GenericIPAddressField(
+        verbose_name=_(u"Who"), null=True, blank=True
+    )
     ad = models.ForeignKey(AdBase)
 
     class Meta:
