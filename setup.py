@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="django-adzone",
-    version="0.2.4",
+    version="0.2.5",
     url="http://github.com/winterweaver/django-adzone",
     description="A django app to manage adverts according to zones on a website.",
     author="Andre Engelbrecht",
