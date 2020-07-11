@@ -9,16 +9,17 @@ from __future__ import absolute_import
 
 import datetime
 
-from adzone.managers import AdManager
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from adzone.managers import AdManager
 
 # Use a datetime a few days before the max to that timezone changes don't
 # cause an OverflowError.
 MAX_DATETIME = datetime.datetime.max - datetime.timedelta(days=2)
 try:
-    from django.utils.timezone import now, make_aware, utc
+    from django.utils.timezone import make_aware, now, utc
 except ImportError:
     now = datetime.datetime.now
 else:
@@ -30,7 +31,7 @@ class Advertiser(models.Model):
 
     company_name = models.CharField(verbose_name=_(u"Company Name"), max_length=255)
     website = models.URLField(verbose_name=_(u"Company Site"))
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _(u"Ad Provider")
@@ -94,9 +95,13 @@ class AdBase(models.Model):
     )
 
     # Relations
-    advertiser = models.ForeignKey(Advertiser, verbose_name=_("Ad Provider"))
-    category = models.ForeignKey(AdCategory, verbose_name=_("Category"))
-    zone = models.ForeignKey(AdZone, verbose_name=_("Zone"))
+    advertiser = models.ForeignKey(
+        Advertiser, verbose_name=_("Ad Provider"), on_delete=models.CASCADE,
+    )
+    category = models.ForeignKey(
+        AdCategory, verbose_name=_("Category"), on_delete=models.CASCADE,
+    )
+    zone = models.ForeignKey(AdZone, verbose_name=_("Zone"), on_delete=models.CASCADE)
 
     # Our Custom Manager
     objects = AdManager()
@@ -108,7 +113,6 @@ class AdBase(models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
         return ("adzone_ad_view", [self.id])
 
@@ -122,7 +126,7 @@ class AdImpression(models.Model):
     source_ip = models.GenericIPAddressField(
         verbose_name=_(u"Who"), null=True, blank=True
     )
-    ad = models.ForeignKey(AdBase)
+    ad = models.ForeignKey(AdBase, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("Ad Impression")
@@ -138,7 +142,7 @@ class AdClick(models.Model):
     source_ip = models.GenericIPAddressField(
         verbose_name=_(u"Who"), null=True, blank=True
     )
-    ad = models.ForeignKey(AdBase)
+    ad = models.ForeignKey(AdBase, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("Ad Click")
