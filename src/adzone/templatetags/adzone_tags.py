@@ -11,8 +11,7 @@ from datetime import datetime
 
 from django import template
 
-from adzone.models import AdBase
-from adzone.models import AdImpression
+from adzone.models import AdBase, AdImpression
 
 register = template.Library()
 
@@ -40,8 +39,8 @@ def random_zone_ad(context, ad_zone):
     to_return["ad"] = ad
 
     # Record a impression for the ad
-    if context.has_key("from_ip") and ad:
-        from_ip = context.get("from_ip")
+    if "from_ip" in context and ad:
+        from_ip = context["from_ip"]
         try:
             impression = AdImpression(
                 ad=ad, impression_date=datetime.now(), source_ip=from_ip
@@ -69,8 +68,8 @@ def random_category_ad(context, ad_zone, ad_category):
     to_return["ad"] = ad
 
     # Record a impression for the ad
-    if context.has_key("from_ip") and ad:
-        from_ip = context.get("from_ip")
+    if "from_ip" in context and ad:
+        from_ip = context["from_ip"]
         try:
             impression = AdImpression(
                 ad=ad, impression_date=datetime.now(), source_ip=from_ip
