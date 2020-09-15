@@ -22,7 +22,7 @@ class AdManager(models.Manager):
         qs = (
             self.get_queryset()
             .filter(
-                start_showing__lte=now(), stop_showing__gte=now(), zone__slug=ad_zone
+                start_showing__lte=now(), stop_showing__gte=now(), zone__slug=ad_zone,
             )
             .select_related("textad", "bannerad")
         )

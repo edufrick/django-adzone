@@ -28,7 +28,7 @@ def datenow():
 def create_objects():
     """ Simple helper to create advertiser, category and zone """
     advertiser = Advertiser.objects.create(
-        company_name="Advertiser Name 1", website="http://example.com/", user=user()
+        company_name="Advertiser Name 1", website="http://example.com/", user=user(),
     )
 
     category = AdCategory.objects.create(
@@ -38,7 +38,7 @@ def create_objects():
     )
 
     adzone = AdZone.objects.create(
-        title="Sidebar", slug="sidebar", description="Sidebar Zone Description"
+        title="Sidebar", slug="sidebar", description="Sidebar Zone Description",
     )
 
     return advertiser, category, adzone
@@ -61,12 +61,12 @@ def create_advert():
 class AdvertiserTestCase(TestCase):
     def test_model(self):
         Advertiser(
-            company_name="Advertiser Name 1", website="http://example.com/", user=user()
+            company_name="Advertiser Name 1", website="http://example.com/", user=user(),
         )
 
     def test_get_website_url(self):
         advertiser = Advertiser(
-            company_name="Advertiser Name 1", website="http://example.com/", user=user()
+            company_name="Advertiser Name 1", website="http://example.com/", user=user(),
         )
 
         self.assertEqual("http://example.com/", advertiser.get_website_url())
@@ -114,7 +114,7 @@ class AdManagerTestCase(TestCase):
         # Create two categories and two adverts
         advertiser, category, zone = create_objects()
         category2 = AdCategory.objects.create(
-            title="Category 2", slug="category-2", description="Category 2 description"
+            title="Category 2", slug="category-2", description="Category 2 description",
         )
         AdBase.objects.create(
             title="Ad Title",
@@ -178,7 +178,7 @@ class TemplateTagsTestCase(TestCase):
 
     def test_random_category_ad_renders(self):
         template = Template(
-            "{% load adzone_tags %}{% random_category_ad 'sidebar' 'internet-services' %}"
+            "{% load adzone_tags %}{% random_category_ad 'sidebar' 'internet-services' %}",
         )
         response = SimpleTemplateResponse(template)
         response.render()

@@ -43,7 +43,7 @@ def random_zone_ad(context, ad_zone):
         from_ip = context["from_ip"]
         try:
             impression = AdImpression(
-                ad=ad, impression_date=datetime.now(), source_ip=from_ip
+                ad=ad, impression_date=datetime.now(), source_ip=from_ip,
             )
             impression.save()
         except:
@@ -72,7 +72,7 @@ def random_category_ad(context, ad_zone, ad_category):
         from_ip = context["from_ip"]
         try:
             impression = AdImpression(
-                ad=ad, impression_date=datetime.now(), source_ip=from_ip
+                ad=ad, impression_date=datetime.now(), source_ip=from_ip,
             )
             impression.save()
         except:
