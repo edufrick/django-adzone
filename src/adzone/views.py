@@ -7,13 +7,15 @@
 
 from __future__ import absolute_import
 
+import re
 from datetime import datetime
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
-from adzone.models import AdBase
-from adzone.models import AdClick
+from adzone.models import AdBase, AdClick
+
+SCHEME_RE = re.compile(r"^https?://")
 
 
 def ad_view(request, id):
@@ -21,12 +23,12 @@ def ad_view(request, id):
     ad = get_object_or_404(AdBase, id=id)
 
     click = AdClick.objects.create(
-        ad=ad, click_date=datetime.now(), source_ip=request.META.get("REMOTE_ADDR", "")
+        ad=ad, click_date=datetime.now(), source_ip=request.META.get("REMOTE_ADDR", ""),
     )
     click.save()
 
     redirect_url = ad.url
-    if not redirect_url.startswith("http://"):
+    if not SCHEME_RE.match(redirect_url):
         # Add http:// to the url so that the browser redirects correctly
         redirect_url = "http://" + redirect_url
 
