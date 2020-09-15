@@ -11,6 +11,7 @@ import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from adzone.managers import AdManager
@@ -91,7 +92,7 @@ class AdBase(models.Model):
 
     start_showing = models.DateTimeField(verbose_name=_(u"Start showing"), default=now)
     stop_showing = models.DateTimeField(
-        verbose_name=_(u"Stop showing"), default=MAX_DATETIME
+        verbose_name=_(u"Stop showing"), default=MAX_DATETIME,
     )
 
     # Relations
@@ -114,7 +115,7 @@ class AdBase(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return ("adzone_ad_view", [self.id])
+        return reverse("adzone_ad_view", args=[self.id])
 
 
 class AdImpression(models.Model):
@@ -124,7 +125,7 @@ class AdImpression(models.Model):
 
     impression_date = models.DateTimeField(verbose_name=_(u"When"), auto_now_add=True)
     source_ip = models.GenericIPAddressField(
-        verbose_name=_(u"Who"), null=True, blank=True
+        verbose_name=_(u"Who"), null=True, blank=True,
     )
     ad = models.ForeignKey(AdBase, on_delete=models.CASCADE)
 
@@ -140,7 +141,7 @@ class AdClick(models.Model):
 
     click_date = models.DateTimeField(verbose_name=_(u"When"), auto_now_add=True)
     source_ip = models.GenericIPAddressField(
-        verbose_name=_(u"Who"), null=True, blank=True
+        verbose_name=_(u"Who"), null=True, blank=True,
     )
     ad = models.ForeignKey(AdBase, on_delete=models.CASCADE)
 
@@ -160,5 +161,5 @@ class BannerAd(AdBase):
     """ A standard banner Ad """
 
     content = models.ImageField(
-        verbose_name=_(u"Content"), upload_to="adzone/bannerads/"
+        verbose_name=_(u"Content"), upload_to="adzone/bannerads/",
     )
